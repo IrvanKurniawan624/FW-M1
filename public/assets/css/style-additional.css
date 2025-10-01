@@ -150,3 +150,25 @@ button[status="loading"] .loading-button {
 .btn-shadow-warning:hover{
     background-color: #ff990d !important;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+  background-color: #531838;
+  color: white;
+}
+
+footer p{
+  font-size: .9rem;
+}
+
+.content{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav-item a{
+  font-size: .9rem;
+  margin: 4px 0px;
+  padding: 13px 13px;
+}
