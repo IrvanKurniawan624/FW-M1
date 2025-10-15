@@ -187,22 +187,6 @@
 
 @section('script')
 <script>
-    $.ajaxSetup({
-        headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        }
-    });
-
-    $('.modal').on('show.bs.modal', function () {
-        let form = $(this).find('form')[0];
-        if (form) {
-            form.reset(); 
-        }
-
-        $(this).find('.is-invalid').removeClass('is-invalid');
-        $(this).find('.invalid-feedback').remove();
-    });
-
     $('.form_submit').on('submit', function(e) {
         e.preventDefault(); 
         let this_form = this;

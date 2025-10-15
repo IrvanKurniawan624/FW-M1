@@ -19,46 +19,7 @@
 
 <body>
     <div class="container-fluid d-flex">
-        <div class="sidebar bg-light" style="height: 100vh">
-            <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
-                <a href="/" class="mb-0 link-dark position-absoulte text-decoration-none">
-                    <span class="fs-4 text-center d-block">APP - PEGAWAI</span>
-                </a>
-                <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item"><a href="{{ url('/employee') }}" class="nav-link active" aria-current="page">
-                        <i class="fa-regular fa-user ms-2"></i>
-                            Employee
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/department') }}" class="nav-link link-dark">
-                            <i class="fa-regular fa-hospital ms-2"></i>
-                            Department
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/attendance') }}" class="nav-link link-dark">
-                            <i class="fa-regular fa-id-card ms-2"></i>
-                            Attendance
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/report') }}" class="nav-link link-dark">
-                            <i class="fa-regular fa-file-lines ms-2"></i>
-                            Report
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/settings') }}" class="nav-link link-dark">
-                            <i class="fa-solid fa-gear ms-2"></i>
-                            Settings
-                        </a>
-                    </li>
-                </ul>
-                <hr>
-            </div>
-        </div>
+        @include('layouts.sidebar')
     
         <div class="content">
             <div class="m-5">
@@ -77,6 +38,23 @@
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            }
+        });
+
+        $('.modal').on('show.bs.modal', function () {
+            let form = $(this).find('form')[0];
+            if (form) {
+                form.reset(); 
+            }
+
+            $(this).find('.is-invalid').removeClass('is-invalid');
+            $(this).find('.invalid-feedback').remove();
+        });
+    </script>
 
     @yield("script")
 </body>

@@ -2,6 +2,15 @@
   font-family: 'Poppins', sans-serif;
 }
 
+.nav-item > * {
+  color: black;
+}
+
+.nav-item:hover > * {
+  color: white;
+  background-color: #8c2a60c9;
+}
+
 .table-dark-purple thead th{
   background-color: #6E214A;
   color: #fff;
@@ -171,4 +180,14 @@ footer p{
   font-size: .9rem;
   margin: 4px 0px;
   padding: 13px 13px;
+}
+
+.bg-image{
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-size: cover;
+}
+
+.content{
+  width: 100%;
 }
