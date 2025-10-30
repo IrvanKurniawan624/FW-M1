@@ -3,32 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Department;
+use App\Models\Position;
 use Illuminate\Http\Request;
 use App\Helpers\ApiFormatter;
 use Illuminate\Validation\ValidationException;
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $employees = Employee::latest()->paginate(5);
+        $employees = Employee::latest()->get();
+        $departments = Department::all();
+        $positions = Position::all();
 
-        return view('employees.index', compact('employees'));
+        return view('employees.index', [
+            'employees' => $employees,
+            'departments' => $departments,
+            'positions' => $positions,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {
@@ -40,6 +35,8 @@ class EmployeeController extends Controller
                 'alamat'         => 'required|string|max:255',
                 'tanggal_masuk'  => 'required|date',
                 'status'         => 'required|string|max:50',
+                'departmen_id'   => 'required|exists:departments,id',
+                'jabatan_id'     => 'required|exists:positions,id',
             ]);
 
             $employee = Employee::create($request->all());
@@ -53,12 +50,9 @@ class EmployeeController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::with('department', 'position')->find($id);
 
         if (!$employee) {
             return ApiFormatter::error(404, "Data tidak ditemukan");
@@ -67,9 +61,6 @@ class EmployeeController extends Controller
         return ApiFormatter::success(200, "Detail data berhasil diambil", $employee);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $employee = Employee::find($id);
@@ -108,9 +99,6 @@ class EmployeeController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $employee = Employee::find($id);
